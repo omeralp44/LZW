@@ -1,0 +1,64 @@
+source = [];
+source = string(source);
+
+for i = 1:200000
+ x = rand;
+ 
+ if x <= 0.9
+ source(end+1) = "a";
+ 
+ elseif 0.9 < x <= 1 
+ source(end+1) = "b";
+ end 
+
+end
+
+source(end+1) = "";
+
+output = [];
+output = string(output);
+
+dict = ["a" "b"];
+dict = string(dict);
+
+count = 0;
+current = "";
+
+for i = 1:(length(source)-1)
+ 
+ current = current + source(i);
+ next_char = source(i+1);
+ 
+ 	for k = 1:length(dict)
+ 
+ 		if dict(k) == current
+ 			count = count + 1;
+ 			for d = 1:length(dict)
+ 				if dict(d) == (current + next_char)
+ 					count = count + 1;
+ 					
+				end
+			end
+		end
+	end
+ 
+ 	if count == 0
+ 		dict(end+1) = current;
+ 		current = "";
+        elseif count == 1
+ 		for s = 1:length(dict)
+ 			if dict(s) == current
+ 				output(end+1) = s;
+ 			end
+ 		end
+ 	dict(end+1) = current + next_char;
+ 	current = "";
+ 	end
+        count = 0;  
+end
+
+for t = 1:length(dict)
+ 	if dict(t) == current
+ 		output(end+1) = t;
+ 	end
+end
